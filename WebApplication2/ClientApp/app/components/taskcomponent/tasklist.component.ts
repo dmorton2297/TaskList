@@ -64,6 +64,7 @@ export class TaskListComponent {
             let s: StatusItem = { Id: identifier, Status: "Y" }
             this.http.post(this.baseUrl + 'api/Data/MarkStatus', s).subscribe();
             document.getElementById(id)!.className = "btn btn-success";
+            document.getElementById("span_" + identifier)!.className = "glyphicon glyphicon-ok";
             var x = document.getElementById(id)!;
             x.id = "incomplete_" + identifier;
         } else {
@@ -71,6 +72,8 @@ export class TaskListComponent {
             let s: StatusItem = { Id: identifier, Status: "N" }
             this.http.post(this.baseUrl + 'api/Data/MarkStatus', s).subscribe();
             document.getElementById(id)!.className = "btn btn-danger";
+            document.getElementById("span_" + identifier)!.className = "glyphicon glyphicon-remove";
+
             var x = document.getElementById(id)!;
             x.id = "completed_" + identifier;
         }

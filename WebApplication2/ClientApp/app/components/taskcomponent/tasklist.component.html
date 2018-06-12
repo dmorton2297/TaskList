@@ -26,12 +26,12 @@
                 <td>
                     <div *ngIf="task.completed == 'N'">
                         <button id="completed_{{ task.id }}" class="btn btn-danger" #elem (click)="onUpdate(elem.id)">
-                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="glyphicon glyphicon-remove" id="span_{{ task.id }}"></span>
                         </button>
                     </div>
                     <div *ngIf="task.completed == 'Y'">
                         <button id="incomplete_{{ task.id }}" class="btn btn-success" #elem (click)="onUpdate(elem.id)">
-                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="glyphicon glyphicon-ok" id="span_{{ task.id }}"></span>
                         </button>
                     </div>
                 </td>
