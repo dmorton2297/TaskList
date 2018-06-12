@@ -7,23 +7,32 @@
 <body>
     <h1>Task List Page</h1>
 
+    <button class="btn btn-default" id="addTaskButton" [routerLink]="['/addtask']">Add Task</button>
    <table class='table' *ngIf="tasks">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Priority</th>
                 <th>Completed</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let task of tasks">
-                <td>{{ task.id }}</td>
                 <td>{{ task.name }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.priority }}</td>
                 <td>{{ task.completed }}</td>
+                <td>
+                    <button id="{{ task.id }}" class="btn btn-info" #elem (click)="onUpdate(elem.id)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button id="{{ task.id }}" class="btn btn-danger" #elem (click)="onDelete(elem.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+
+                </td>
             </tr>
         </tbody>
     </table>

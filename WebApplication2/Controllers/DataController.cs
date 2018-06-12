@@ -50,6 +50,19 @@ namespace WebApplication2.Controllers
             return View();
         }
 
+        [HttpPost("[action]")]
+        public bool Delete([FromBody]DeleteItem item)
+        {
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            conn.Open();
+
+            string sqlcmd = "DELETE FROM TaskList WHERE Id=" + item.Id;
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandText = sqlcmd;
+
+            comm.ExecuteReader();
+            return true;
+        }
 
         //[FromBody] tag connects this action with Angular2
         [HttpPost("[action]")]
@@ -90,6 +103,7 @@ namespace WebApplication2.Controllers
             public string Completed { get; set; }
         }
 
+        // Model for Tasks being created from Add Task Form
         public class NewTask
         {
             public string Name { get; set; }
@@ -97,6 +111,10 @@ namespace WebApplication2.Controllers
             public string Priority { get; set; }
         }
 
-      
+        // Model for tasks that ned to be deleted
+        public class DeleteItem
+        {
+            public string Id { get; set; }
+        }
     }
 }
