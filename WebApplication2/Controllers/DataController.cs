@@ -93,6 +93,21 @@ namespace WebApplication2.Controllers
             return true;
         }
 
+        [HttpPost("[action]")]
+        public bool MarkStatus([FromBody]StatusItem item)
+        {
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            conn.Open();
+
+            string sqlcmd = "update TaskList SET Completed='"+item.Status+"' WHERE Id=" + item.Id;
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandText = sqlcmd;
+
+            Debug.Write(sqlcmd);
+            comm.ExecuteReader();
+            return true;
+        }
+
         [Serializable]
         public class Task
         {
@@ -109,6 +124,12 @@ namespace WebApplication2.Controllers
             public string Name { get; set; }
             public string Description { get; set; }
             public string Priority { get; set; }
+        }
+
+        public class StatusItem
+        {
+            public string Id { get; set; }
+            public string Status { get; set; }
         }
 
         // Model for tasks that ned to be deleted

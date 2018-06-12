@@ -4,3 +4,7 @@
 #addTaskButton {
     float: right;
 }
+
+#returnButton {
+    padding-left: 10px;
+}

@@ -35,8 +35,45 @@ export class TaskListComponent {
         }, error => console.error(error));
     }
 
+    onComplete(id: string) {
+        let identifier = id.substring(10);
+        let s: StatusItem = { Id: identifier, Status: "Y" }
+        this.http.post(this.baseUrl + 'api/Data/MarkStatus', s).subscribe();
+        document.getElementById(id)!.className = "btn btn-success";
+        var x = document.getElementById(id)!;
+        x.id = "incomplete_" + identifier;
+    }
+
+    onIncomplete(id: string) {
+        let identifier = id.substring(11);
+        let s: StatusItem = { Id: identifier, Status: "N" }
+        this.http.post(this.baseUrl + 'api/Data/MarkStatus', s).subscribe();
+        document.getElementById(id)!.className = "btn btn-danger";
+        var x = document.getElementById(id)!;
+        x.id = "completed_" + identifier;
+
+        window.alert(x.id);
+
+
+    }
+
     onUpdate(id: string) {
-        window.alert("Updating id " + id)
+        let test = id.substring(0, 9);
+        if (test == "completed") {
+            let identifier = id.substring(10);
+            let s: StatusItem = { Id: identifier, Status: "Y" }
+            this.http.post(this.baseUrl + 'api/Data/MarkStatus', s).subscribe();
+            document.getElementById(id)!.className = "btn btn-success";
+            var x = document.getElementById(id)!;
+            x.id = "incomplete_" + identifier;
+        } else {
+            let identifier = id.substring(11);
+            let s: StatusItem = { Id: identifier, Status: "N" }
+            this.http.post(this.baseUrl + 'api/Data/MarkStatus', s).subscribe();
+            document.getElementById(id)!.className = "btn btn-danger";
+            var x = document.getElementById(id)!;
+            x.id = "completed_" + identifier;
+        }
     }
 }
 
@@ -50,4 +87,9 @@ interface Task {
 
 interface DeleteItem {
     Id: string;
+}
+
+interface StatusItem {
+    Id: string;
+    Status: string;
 }

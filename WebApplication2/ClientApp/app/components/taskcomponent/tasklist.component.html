@@ -14,7 +14,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Priority</th>
-                <th>Completed</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,7 +23,18 @@
                 <td>{{ task.name }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.priority }}</td>
-                <td>{{ task.completed }}</td>
+                <td>
+                    <div *ngIf="task.completed == 'N'">
+                        <button id="completed_{{ task.id }}" class="btn btn-danger" #elem (click)="onUpdate(elem.id)">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </div>
+                    <div *ngIf="task.completed == 'Y'">
+                        <button id="incomplete_{{ task.id }}" class="btn btn-success" #elem (click)="onUpdate(elem.id)">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </div>
+                </td>
                 <td>
                     <button id="{{ task.id }}" class="btn btn-info" #elem (click)="onUpdate(elem.id)">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -31,6 +42,8 @@
                     <button id="{{ task.id }}" class="btn btn-danger" #elem (click)="onDelete(elem.id)">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
+                    
+                    
 
                 </td>
             </tr>
