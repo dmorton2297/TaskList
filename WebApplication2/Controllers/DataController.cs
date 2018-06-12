@@ -12,7 +12,7 @@ namespace WebApplication2.Controllers
     public class DataController : Controller
     {
         [HttpGet("[action]")]
-        public List<Task> Tasks()
+        public List<Task> GetTasks()
         {
 
              SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
@@ -44,10 +44,16 @@ namespace WebApplication2.Controllers
 
         }
 
+        [HttpGet("[action]")]
+        public IActionResult TaskList()
+        {
+            return View();
+        }
+
 
         //[FromBody] tag connects this action with Angular2
         [HttpPost("[action]")]
-        public NewTask Create([FromBody]NewTask task)
+        public bool Create([FromBody]NewTask task)
         {
             // get all data from post request 
             string name = task.Name;
@@ -71,7 +77,7 @@ namespace WebApplication2.Controllers
 
             comm.ExecuteReader();
 
-            return task;
+            return true;
         }
 
         [Serializable]
