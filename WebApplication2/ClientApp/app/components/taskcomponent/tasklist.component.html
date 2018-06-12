@@ -25,18 +25,18 @@
                 <td>{{ task.priority }}</td>
                 <td>
                     <div *ngIf="task.completed == 'N'">
-                        <button id="completed_{{ task.id }}" class="btn btn-danger" #elem (click)="onUpdate(elem.id)">
+                        <button id="completed_{{ task.id }}" class="btn btn-danger" #elem (click)="onStatusUpdate(elem.id)">
                             <span class="glyphicon glyphicon-remove" id="span_{{ task.id }}"></span>
                         </button>
                     </div>
                     <div *ngIf="task.completed == 'Y'">
-                        <button id="incomplete_{{ task.id }}" class="btn btn-success" #elem (click)="onUpdate(elem.id)">
+                        <button id="incomplete_{{ task.id }}" class="btn btn-success" #elem (click)="onStatusUpdate(elem.id)">
                             <span class="glyphicon glyphicon-ok" id="span_{{ task.id }}"></span>
                         </button>
                     </div>
                 </td>
                 <td>
-                    <button id="{{ task.id }}" class="btn btn-info" #elem (click)="onUpdate(elem.id)">
+                    <button id="{{ task.id }}" class="btn btn-info" [routerLink]="['/updatetask', task.id]">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button id="{{ task.id }}" class="btn btn-danger" #elem (click)="onDelete(elem.id)">

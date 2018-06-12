@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { TaskListComponent } from './components/taskcomponent/tasklist.component'
 import { AddTaskComponent } from './components/addtask/addtask.component.';
+import { UpdateTaskComponent } from './components/updatetask/updatetask.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { AddTaskComponent } from './components/addtask/addtask.component.';
         NavMenuComponent,
         TaskListComponent,
         HomeComponent,
+        UpdateTaskComponent, 
         AddTaskComponent
     ],
     imports: [
@@ -27,6 +29,7 @@ import { AddTaskComponent } from './components/addtask/addtask.component.';
             { path: 'home', component: HomeComponent },
             { path: 'tasklist', component: TaskListComponent },
             { path: 'addtask', component: AddTaskComponent },
+            { path: 'updatetask/:id', component: UpdateTaskComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]

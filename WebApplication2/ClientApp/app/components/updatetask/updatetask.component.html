@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Update Task Component</h1>
+    <form #f="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   [(ngModel)]="task.Name" name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description"
+                   [(ngModel)]="task.Description" name="description">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Priority</label>
+            <input type="text" class="form-control" id="priority"
+                   [(ngModel)]="task.Priority" name="priority">
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-success" id="submitbutton">Submit</button>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger" id="returnButton" [routerLink]="['/tasklist']">Go to Task List</button>
+            </div>
+
+        </div>
+    </form>
+
+
+    <!--<div id="snackbar">Task Updated</div>-->
+
+
+
+</body>
+</html>

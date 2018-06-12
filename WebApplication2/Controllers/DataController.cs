@@ -44,6 +44,40 @@ namespace WebApplication2.Controllers
 
         }
 
+        [HttpGet("[action]/{id}")]
+        public Task GetTask(int id)
+        {
+            Task entry;
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            conn.Open();
+
+            string sqlcmd = "SELECT * FROM TaskList WHERE Id=" + id;
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandText = sqlcmd;
+
+            SqlDataReader reader = comm.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    entry = new Task
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Description = reader.GetString(2),
+                        Priority = reader.GetString(3),
+                        Completed = reader.GetString(4)
+                    };
+
+                    return entry;
+
+                }
+            }
+
+            Debug.Write("We could not find the entry we were looking for\n");
+            return new Task();
+        }
+
         [HttpGet("[action]")]
         public IActionResult TaskList()
         {
