@@ -28,10 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\components\addtask\addtask.component..ts" />
     <None Remove="ClientApp\app\components\taskcomponent\tasklist.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\addtask\addtask.component..ts" />
     <TypeScriptCompile Include="ClientApp\app\components\taskcomponent\tasklist.component.ts" />
   </ItemGroup>
 

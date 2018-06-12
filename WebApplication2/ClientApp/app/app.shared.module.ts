@@ -8,13 +8,15 @@ import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { TaskListComponent } from './components/taskcomponent/tasklist.component'
+import { AddTaskComponent } from './components/addtask/addtask.component.';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
         TaskListComponent,
-        HomeComponent
+        HomeComponent,
+        AddTaskComponent
     ],
     imports: [
         CommonModule,
@@ -24,6 +26,7 @@ import { TaskListComponent } from './components/taskcomponent/tasklist.component
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'tasklist', component: TaskListComponent },
+            { path: 'addtask', component: AddTaskComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]

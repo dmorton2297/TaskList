@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
     templateUrl: './tasklist.component.html'
 })
 export class TaskListComponent {
-    public tasks: Task[];
+    public tasks: Task[]; 
 
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
         http.get(baseUrl + 'api/Data/Tasks').subscribe(result => {
@@ -24,9 +24,3 @@ interface Task {
     Completed: string;
 }
 
-
-interface ResponseModel {
-    Message: string,
-    Status: boolean,
-    Data: object
-}

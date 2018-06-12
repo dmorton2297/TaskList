@@ -44,6 +44,36 @@ namespace WebApplication2.Controllers
 
         }
 
+
+        //[FromBody] tag connects this action with Angular2
+        [HttpPost("[action]")]
+        public NewTask Create([FromBody]NewTask task)
+        {
+            // get all data from post request 
+            string name = task.Name;
+            string description = task.Description;
+            string priority = task.Priority;
+            string completed = "N";
+
+
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            conn.Open();
+
+            string str = "select count(*) from TaskList";
+            SqlCommand com = new SqlCommand(str, conn);
+            int count = Convert.ToInt16(com.ExecuteScalar()) + 1;
+
+            string sqlcmd = "INSERT INTO dbo.TaskList (Id, Name, Description, Priority, Completed) VALUES ("+count+", '" + name + "', '" + description + "', '" + priority + "', '" + completed + "')";
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandText = sqlcmd;
+
+            Debug.Write(sqlcmd);
+
+            comm.ExecuteReader();
+
+            return task;
+        }
+
         [Serializable]
         public class Task
         {
@@ -52,6 +82,13 @@ namespace WebApplication2.Controllers
             public string Description { get; set; }
             public string Priority { get; set; }
             public string Completed { get; set; }
+        }
+
+        public class NewTask
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Priority { get; set; }
         }
 
       
