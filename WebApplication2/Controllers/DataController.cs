@@ -130,7 +130,15 @@ namespace WebApplication2.Controllers
 
             string str = "select MAX(Id) from TaskList";
             SqlCommand com = new SqlCommand(str, conn);
-            int count = Convert.ToInt16(com.ExecuteScalar()) + 1;
+            int count = 0;
+            try
+            {
+                count = Convert.ToInt16(com.ExecuteScalar()) + 1;
+
+            }catch(Exception e)
+            {
+                Debug.Write("Database is empty");
+            }
 
             string sqlcmd = "INSERT INTO dbo.TaskList (Id, Name, Description, Priority, Completed) VALUES ("+count+", '" + name + "', '" + description + "', '" + priority + "', '" + completed + "')";
             SqlCommand comm = conn.CreateCommand();
