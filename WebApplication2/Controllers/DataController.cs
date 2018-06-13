@@ -100,6 +100,20 @@ namespace WebApplication2.Controllers
             return true;
         }
 
+        [HttpPost("[action]")]
+        public bool Update([FromBody]Task item)
+        {
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            conn.Open();
+
+            string sqlcmd = "UPDATE TaskList SET name='"+item.Name+"', description='"+item.Description+"', priority='"+item.Priority+"' WHERE Id="+ item.Id;
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandText = sqlcmd;
+
+            comm.ExecuteReader();
+            return true;
+        }
+
         //[FromBody] tag connects this action with Angular2
         [HttpPost("[action]")]
         public bool Create([FromBody]NewTask task)

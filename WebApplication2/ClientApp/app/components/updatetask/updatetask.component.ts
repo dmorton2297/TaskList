@@ -36,8 +36,16 @@ export class UpdateTaskComponent implements OnInit {
     }
     
     onSubmit() {
+        var dbtask = {
+            Id: this.task.id,
+            Name: this.task.name,
+            Description: this.task.description,
+            Priority: this.task.priority,
+            Completed: this.task.completed
+        };
 
-       // this.http.post(this.baseUrl + 'api/Data/Create', this.task).subscribe();
+
+        this.http.post(this.baseUrl + 'api/Data/Update', dbtask).subscribe();
 
         // present the snackbar showing the database has been updated
         var x = document.getElementById("snackbar");
@@ -53,3 +61,4 @@ interface Task {
     priority: string;
     completed: string;
 }
+
