@@ -6,24 +6,26 @@
 </head>
 <body>
     <h1>Update Task Component</h1>
-    <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <form #f="ngForm" *ngIf="task" (ngSubmit)="onSubmit()">
+        THIS IS A TEST {{task.name}}
+
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name"
                    required
-                   [(ngModel)]="task.Name" name="name">
+                   [(ngModel)]="task.name" name="name">
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
             <input type="text" class="form-control" id="description"
-                   [(ngModel)]="task.Description" name="description">
+                   [(ngModel)]="task.description" name="description">
         </div>
 
         <div class="form-group">
             <label for="description">Priority</label>
             <input type="text" class="form-control" id="priority"
-                   [(ngModel)]="task.Priority" name="priority">
+                   [(ngModel)]="task.priority" name="priority">
         </div>
 
         <div class="row">

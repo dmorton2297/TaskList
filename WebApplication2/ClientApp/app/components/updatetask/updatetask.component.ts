@@ -1,4 +1,4 @@
-﻿import { Component, Inject } from '@angular/core';
+﻿import { Component, Inject, OnInit } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
@@ -9,24 +9,30 @@ import { ActivatedRoute } from "@angular/router";
     templateUrl: './updatetask.component.html',
     styleUrls: ['../addtask/addtask.component.css']
 })
-export class UpdateTaskComponent {
-    public task: Task;
+export class UpdateTaskComponent implements OnInit {
+    task: Task;
+    id: string;
     http: Http;
     baseUrl: string;
 
     constructor(private route: ActivatedRoute, http: Http, @Inject('BASE_URL') baseUrl: string) {
+        this.id = JSON.stringify(this.route.snapshot.data.cres);
+        this.id = this.id.substring(1);
+        this.id = this.id.substring(0, this.id.length - 1);
+        console.log(this.id.length)
         this.http = http;
         this.baseUrl = baseUrl;
-        this.route.params.subscribe(params => {
-            let id = params["id"];
-            this.http.get(this.baseUrl + 'api/Data/GetTask/' + id).subscribe(result => {
-                this.task.Name = "Name";
-                this.task.Description = "Description";
-                this.task.Priority = "L";
+        console.log("The received id is " + this.id);
+        let a = this.baseUrl + "/api/Data/GetTask/" + this.id + "";
+        console.log(a);
+        this.http.get(this.baseUrl + "/api/Data/GetTask/" + this.id)
+            .subscribe(result => {
+                this.task = result.json() as Task;
+                console.log(this.task);
             });
-        });
+    }
 
-
+    ngOnInit() {
     }
     
     onSubmit() {
@@ -37,14 +43,13 @@ export class UpdateTaskComponent {
         var x = document.getElementById("snackbar");
         x!.className = "show";
         setTimeout(function () { x!.className = x!.className.replace("show", ""); }, 3000);
-        this.task = { Name: "", Description: "", Priority: "" };
-
-
     }
 }
 
 interface Task {
-    Name: string;
-    Description: string;
-    Priority: string;
+    id: string;
+    name: string;
+    description: string;
+    priority: string;
+    completed: string;
 }

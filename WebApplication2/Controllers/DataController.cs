@@ -55,6 +55,8 @@ namespace WebApplication2.Controllers
             SqlCommand comm = conn.CreateCommand();
             comm.CommandText = sqlcmd;
 
+            Debug.Write(sqlcmd);
+
             SqlDataReader reader = comm.ExecuteReader();
             if (reader.HasRows)
             {

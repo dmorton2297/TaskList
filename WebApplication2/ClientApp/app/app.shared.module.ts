@@ -11,6 +11,8 @@ import { TaskListComponent } from './components/taskcomponent/tasklist.component
 import { AddTaskComponent } from './components/addtask/addtask.component.';
 import { UpdateTaskComponent } from './components/updatetask/updatetask.component';
 
+import { TaskResolver } from './components/updatetask/task.resolver';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -29,9 +31,17 @@ import { UpdateTaskComponent } from './components/updatetask/updatetask.componen
             { path: 'home', component: HomeComponent },
             { path: 'tasklist', component: TaskListComponent },
             { path: 'addtask', component: AddTaskComponent },
-            { path: 'updatetask/:id', component: UpdateTaskComponent },
+            {
+                path: 'updatetask/:id', component: UpdateTaskComponent,
+                resolve: {
+                    cres: TaskResolver
+                }
+            },
             { path: '**', redirectTo: 'home' }
         ])
+    ],
+    providers: [
+        TaskResolver
     ]
 })
 export class AppModuleShared {

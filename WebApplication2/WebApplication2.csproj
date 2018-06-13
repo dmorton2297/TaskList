@@ -30,12 +30,14 @@
   <ItemGroup>
     <None Remove="ClientApp\app\components\addtask\addtask.component..ts" />
     <None Remove="ClientApp\app\components\taskcomponent\tasklist.component.ts" />
+    <None Remove="ClientApp\app\components\updatetask\task.resolver.ts" />
     <None Remove="ClientApp\app\components\updatetask\updatetask.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\addtask\addtask.component..ts" />
     <TypeScriptCompile Include="ClientApp\app\components\taskcomponent\tasklist.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\updatetask\task.resolver.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\updatetask\updatetask.component.ts" />
   </ItemGroup>
 
