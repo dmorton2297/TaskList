@@ -128,7 +128,7 @@ namespace WebApplication2.Controllers
             SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             conn.Open();
 
-            string str = "select count(*) from TaskList";
+            string str = "select MAX(Id) from TaskList";
             SqlCommand com = new SqlCommand(str, conn);
             int count = Convert.ToInt16(com.ExecuteScalar()) + 1;
 
