@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title></title>
 </head>
-<body>
+<body *ngIf="categories && selectedCategory">
     <h1>Add Task Component</h1>
     <form #f="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -24,6 +24,15 @@
             <label for="description">Priority</label>
             <input type="text" class="form-control" id="priority"
                    [(ngModel)]="task.Priority" name="priority">
+        </div>
+
+        <div class="form-group">
+            <select style="width:50%; height: 40px;" (change)="onSelect($event.target.value)" [(ngModel)]="selectedCategory.id"
+                    [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let category of categories" value={{category.id}}>
+                    {{category.name}}
+                </option>
+            </select>
         </div>
 
         <div class="row">

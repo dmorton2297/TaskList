@@ -9,11 +9,13 @@ import { ActivatedRoute } from "@angular/router";
     templateUrl: './updatetask.component.html',
     styleUrls: ['../addtask/addtask.component.css']
 })
-export class UpdateTaskComponent implements OnInit {
+export class UpdateTaskComponent {
     task: Task;
     id: string;
     http: Http;
     baseUrl: string;
+    public categories: Category[];
+    public selectedCategory: Category;
 
     constructor(private route: ActivatedRoute, http: Http, @Inject('BASE_URL') baseUrl: string) {
         this.id = JSON.stringify(this.route.snapshot.data.cres);
@@ -22,26 +24,45 @@ export class UpdateTaskComponent implements OnInit {
         console.log(this.id.length)
         this.http = http;
         this.baseUrl = baseUrl;
-        console.log("The received id is " + this.id);
-        let a = this.baseUrl + "/api/Data/GetTask/" + this.id + "";
-        console.log(a);
-        this.http.get(this.baseUrl + "/api/Data/GetTask/" + this.id)
-            .subscribe(result => {
-                this.task = result.json() as Task;
-                console.log(this.task);
-            });
+
+        this.http.get(this.baseUrl + 'api/Data/GetCategories').subscribe(result => {
+            this.categories = result.json() as Category[];
+            console.log(this.categories);
+
+            this.http.get(this.baseUrl + "/api/Data/GetTask/" + this.id)
+                .subscribe(result => {
+                    this.task = result.json() as Task;
+                    for (var i = 0; i < this.categories.length; i++) {
+                        if (this.categories[i].id == this.task.category) {
+                            this.selectedCategory = this.categories[i];
+                            console.log(this.task);
+                            break;
+                        }
+                    }
+                });
+
+            
+        });
     }
 
-    ngOnInit() {
+    onSelect(Id: number) {
+        for (var i = 0; i < this.categories.length; i++) {
+            if (this.categories[i].id == Id) {
+                this.task.category = this.categories[i].id;
+                console.log(this.task);
+                break;
+            }
+        }
     }
-    
+
     onSubmit() {
         var dbtask = {
             Id: this.task.id,
             Name: this.task.name,
             Description: this.task.description,
             Priority: this.task.priority,
-            Completed: this.task.completed
+            Completed: this.task.completed,
+            Category: this.task.category
         };
 
 
@@ -60,5 +81,11 @@ interface Task {
     description: string;
     priority: string;
     completed: string;
+    category: number;
+}
+
+interface Category {
+    id: number;
+    name: string;
 }
 

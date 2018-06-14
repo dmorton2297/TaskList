@@ -26,13 +26,14 @@ namespace WebApplication2.Controllers
              {
                  while (reader.Read())
                  {
-                     Task entry = new Task
-                     {
-                         Id = reader.GetInt32(0),
-                         Name = reader.GetString(1),
-                         Description = reader.GetString(2),
-                         Priority = reader.GetString(3),
-                         Completed = reader.GetString(4)
+                    Task entry = new Task
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Description = reader.GetString(2),
+                        Priority = reader.GetString(3),
+                        Completed = reader.GetString(4),
+                        Category = reader.GetInt32(5)
                      };
                      results.Add(entry);
                      Debug.Write("Entry retrieved, ID = " + entry.Id + "\n\n");
@@ -42,6 +43,33 @@ namespace WebApplication2.Controllers
 
             return results;
 
+        }
+
+        [HttpGet("[action]")]
+        public List<Category> GetCategories()
+        {
+            SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandText = "Select * from Categories";
+            conn.Open();
+
+            SqlDataReader reader = comm.ExecuteReader();
+            List<Category> results = new List<Category>();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Category entry = new Category
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1)
+                    };
+                    results.Add(entry);
+                }
+            }
+
+
+            return results;
         }
 
         [HttpGet("[action]/{id}")]
@@ -68,7 +96,8 @@ namespace WebApplication2.Controllers
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                         Priority = reader.GetString(3),
-                        Completed = reader.GetString(4)
+                        Completed = reader.GetString(4),
+                        Category = reader.GetInt32(5)
                     };
 
                     return entry;
@@ -106,7 +135,7 @@ namespace WebApplication2.Controllers
             SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             conn.Open();
 
-            string sqlcmd = "UPDATE TaskList SET name='"+item.Name+"', description='"+item.Description+"', priority='"+item.Priority+"' WHERE Id="+ item.Id;
+            string sqlcmd = "UPDATE TaskList SET name='"+item.Name+"', description='"+item.Description+"', priority='"+item.Priority+"', category="+item.Category+" WHERE Id="+ item.Id;
             SqlCommand comm = conn.CreateCommand();
             comm.CommandText = sqlcmd;
 
@@ -123,6 +152,7 @@ namespace WebApplication2.Controllers
             string description = task.Description;
             string priority = task.Priority;
             string completed = "N";
+            string category = task.Category;
 
 
             SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tasks;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
@@ -140,7 +170,7 @@ namespace WebApplication2.Controllers
                 Debug.Write("Database is empty");
             }
 
-            string sqlcmd = "INSERT INTO dbo.TaskList (Id, Name, Description, Priority, Completed) VALUES ("+count+", '" + name + "', '" + description + "', '" + priority + "', '" + completed + "')";
+            string sqlcmd = "INSERT INTO dbo.TaskList (Id, Name, Description, Priority, Completed, Category) VALUES ("+count+", '" + name + "', '" + description + "', '" + priority + "', '" + completed + "', "+category+")";
             SqlCommand comm = conn.CreateCommand();
             comm.CommandText = sqlcmd;
 
@@ -174,6 +204,7 @@ namespace WebApplication2.Controllers
             public string Description { get; set; }
             public string Priority { get; set; }
             public string Completed { get; set; }
+            public int Category { get; set; }
         }
 
         // Model for Tasks being created from Add Task Form
@@ -182,6 +213,7 @@ namespace WebApplication2.Controllers
             public string Name { get; set; }
             public string Description { get; set; }
             public string Priority { get; set; }
+            public string Category { get; set; }
         }
 
         public class StatusItem
@@ -194,6 +226,12 @@ namespace WebApplication2.Controllers
         public class DeleteItem
         {
             public string Id { get; set; }
+        }
+
+        public class Category
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
         }
     }
 }
