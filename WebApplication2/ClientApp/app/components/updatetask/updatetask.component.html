@@ -27,6 +27,8 @@
         </div>
 
         <div class="form-group">
+            <label for="description">Category</label>
+            <br />
             <select style="width:50%; height: 40px;" (change)="onSelect($event.target.value)" [(ngModel)]="task.category"
                     [ngModelOptions]="{standalone: true}">
                 <option *ngFor="let category of categories" value={{category.id}}>
