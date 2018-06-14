@@ -5,8 +5,8 @@
     <title></title>
 </head>
 <body>
-    <h1>Task List Page</h1>
-
+    <h1 id="tasklist-header">Task List</h1>
+    {{tasks}}
     <button class="btn btn-default" id="addTaskButton" [routerLink]="['/addtask']">Add Task</button>
    <table class='table' *ngIf="tasks">
         <thead>
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let task of tasks">
-                <td>{{ task.name }}</td>
+                <td id="name_{{ task.id }}">{{ task.name }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.priority }}</td>
                 <td>

@@ -15,6 +15,7 @@ export class TaskListComponent {
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
         this.http = http;
         this.baseUrl = baseUrl;
+        console.log(baseUrl + 'api/Data/GetTasks');
         http.get(baseUrl + 'api/Data/GetTasks').subscribe(result => {
             this.tasks = result.json() as Task[];
             console.log(this.tasks);

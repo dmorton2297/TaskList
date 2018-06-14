@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
