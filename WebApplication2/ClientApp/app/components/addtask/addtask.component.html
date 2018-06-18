@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="description">Category</label>
             <br />
-            <select style="width:50%; height: 40px;" (change)="onSelect($event.target.value)" [(ngModel)]="selectedCategory.id"
+            <select style="width:50%; height: 40px;" id="category" (change)="onSelect($event.target.value)" [(ngModel)]="selectedCategory.id"
                     [ngModelOptions]="{standalone: true}">
                 <option *ngFor="let category of categories" value={{category.id}}>
                     {{category.name}}
