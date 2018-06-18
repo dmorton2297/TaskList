@@ -10,6 +10,8 @@ import { Event } from '@angular/router';
 })
 export class TaskListComponent {
     public tasks: Task[]; 
+    public categories: Category[];
+    public displayedTasks: Task[];
     http: Http;
     baseUrl: string;
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
@@ -18,8 +20,13 @@ export class TaskListComponent {
         console.log(baseUrl + 'api/Data/GetTasks');
         http.get(baseUrl + 'api/Data/GetTasks').subscribe(result => {
             this.tasks = result.json() as Task[];
+            this.displayedTasks = this.tasks;
             console.log(this.tasks);
         }, error => console.error(error));
+
+        http.get(baseUrl + 'api/Data/GetCategories').subscribe(result => {
+            this.categories = result.json() as Category[];
+        });
     }
 
     onDelete(id: string) {
@@ -58,15 +65,39 @@ export class TaskListComponent {
             x.id = "completed_" + identifier;
         }
     }
+
+    onSelect(Id: number) {
+        if (Id == -1) {
+            this.displayedTasks = this.tasks as Task[];
+            return;
+        }
+        var tempEntries = new Array();
+        console.log(Id);
+        let identifier = Id;
+        for (var i = 0; i < this.tasks.length; i++) {
+            console.log(this.tasks[i].id)
+            if (this.tasks[i].category == identifier) {
+                tempEntries.push(this.tasks[i]);
+            }
+        }
+
+        this.displayedTasks = tempEntries as Task[];
+    }
     
 }
 
+interface Category {
+    id: number;
+    name: string;
+}
+
 interface Task {
-    Id: number;
-    Name: string;
-    Description: string;
-    Priority: string;
-    Completed: string;
+    id: number;
+    name: string;
+    description: string;
+    priority: string;
+    completed: string;
+    category: number;
 }
 
 interface DeleteItem {

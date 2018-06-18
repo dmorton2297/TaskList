@@ -7,6 +7,12 @@
 <body>
     <h1 id="tasklist-header">Task List</h1>
     <button class="btn btn-default" id="addTaskButton" [routerLink]="['/addtask']">Add Task</button>
+    <select style="width: 50%; height: 40px;" (change)="onSelect($event.target.value)">
+        <option value=-1>All</option>
+        <option *ngFor="let category of categories" value={{category.id}}>
+            {{category.name}}
+        </option>
+    </select>
    <table class='table' *ngIf="tasks">
         <thead>
             <tr>
@@ -18,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let task of tasks">
+            <tr *ngFor="let task of displayedTasks">
                 <td id="name_{{ task.id }}">{{ task.name }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.priority }}</td>

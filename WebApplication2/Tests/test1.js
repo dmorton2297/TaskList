@@ -51,7 +51,8 @@ test
     .requestHooks(logger)
     ('Add Task Test 1', async t => {
         await t
-            .navigateTo('http://localhost:65065/addtask')
+            .click('#tasklist-link')
+            .click('#addTaskButton')
             .click('#name')
             .typeText('#name', 'add test 1')
             .click('#priority')
