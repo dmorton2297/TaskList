@@ -29,7 +29,7 @@ export class UpdateTaskComponent {
             this.categories = result.json() as Category[];
             console.log(this.categories);
 
-            this.http.get(this.baseUrl + "/api/Data/GetTask/" + this.id)
+            this.http.get(this.baseUrl + "api/Data/GetTask/" + this.id)
                 .subscribe(result => {
                     this.task = result.json() as Task;
                     for (var i = 0; i < this.categories.length; i++) {

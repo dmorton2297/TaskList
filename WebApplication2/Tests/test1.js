@@ -12,9 +12,7 @@ const logger = RequestLogger(createUrl);
 // HTTP Response Mocking
 const mock = RequestMock()
     .onRequestTo('http://localhost:65065/api/Data/GetTasks')
-    .respond([{ id: 0, name: 'test', description: 'test description', priority: 'H', completed: 'N', category: 4 }])
-    .onRequestTo('http://localhost:65065/api/Data/GetTask/*')
-    .respond({ id: 0, name: 'test', description: 'test description', priority: 'H', completed: 'N', category: 4 });
+    .respond([{ id: 0, name: 'test', description: 'test description', priority: 'H', completed: 'N', category: 4 }]);
 
 // Fixture to define starting point any request hooks
 // Each test script must have a fixture
@@ -41,22 +39,7 @@ test
     ('Tasklist Test 1', async t => {
         await t
             .navigateTo('http://localhost:65065/tasklist')
-            .wait(100)
             .expect(Selector('#name_0').innerText).eql('test');
-    });
-
-
-// Test if details of selected task transfer to update view
-// This test looks for information to be loaded into a detial view
-// Also utilizes Http mocking
-test
-    .requestHooks(mock)
-    ('Update Task Test 1', async t => {
-        await t
-            .navigateTo('http://localhost:65065/updatetask/0')
-            .wait(100)
-            .expect(Selector('#name').value).eql('test');
-
     });
 
 // Test adding a task to the database 
@@ -69,7 +52,6 @@ test
     ('Add Task Test 1', async t => {
         await t
             .navigateTo('http://localhost:65065/addtask')
-            .wait(100)
             .click('#name')
             .typeText('#name', 'add test 1')
             .click('#priority')
